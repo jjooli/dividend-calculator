@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora de Dividendos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+
+    input, select {
+      padding: 10px;
+      margin: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #0066cc;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #resultado, #tiempoRetorno {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Calculadora de Dividendos</h1>
+
+  <label for="empresa">Selecciona la empresa:</label>
+  <select id="empresa">
+    <option value="AAPL">Apple (3.2%)</option>
+    <option value="KO">Coca-Cola (3.5%)</option>
+    <option value="JNJ">Johnson & Johnson (2.8%)</option>
+  </select>
+
+  <br>
+
+  <label for="inversion">Cantidad a invertir (USD):</label>
+  <input type="number" id="inversion" placeholder="Ej: 1000">
+
+  <br>
+
+  <button onclick="calcularDividendos()">Calcular</button>
+
+  <div id="resultado"></div>
+  <div id="tiempoRetorno"></div>
+
+  <script>
+    function calcularDividendos() {
+      const empresa = document.getElementById("empresa").value;
+      const inversion = parseFloat(document.getElementById("inversion").value);
+
+      if (isNaN(inversion) || inversion <= 0) {
+        alert("Ingresa una cantidad válida.");
+        return;
+      }
+
+      // Tasa de dividendo anual por empresa
+      const tasas = {
+        "AAPL": 0.032,
+        "KO": 0.035,
+        "JNJ": 0.028
+      };
+
+      const tasa = tasas[empresa];
+      const dividendoAnual = inversion * tasa;
+      const tiempoMeses = (inversion / dividendoAnual) * 12;
+
+      document.getElementById("resultado").innerText =
+        `Ingresos por dividendos anuales: $${dividendoAnual.toFixed(2)}`;
+
+      document.getElementById("tiempoRetorno").innerText =
+        `Tiempo estimado para recuperar tu inversión: ${tiempoMeses.toFixed(1)} meses`;
+    }
+  </script>
+</body>
+</html>
