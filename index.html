@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Calculadora de Dividendos Mejorada</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+    input, select {
+      padding: 10px;
+      margin: 10px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #0066cc;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    #resultado, #tiempoRetorno {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Calculadora de Dividendos Mejorada</h1>
+
+  <label for="empresa">Selecciona la empresa:</label>
+  <select id="empresa">
+    <option value="AAPL">Apple (3.2%)</option>
+    <option value="KO">Coca-Cola (3.5%)</option>
+    <option value="JNJ">Johnson & Johnson (2.8%)</option>
+    <option value="MSFT">Microsoft (1.0%)</option>
+    <option value="T">AT&T (6.0%)</option>
+    <option value="VZ">Verizon (4.5%)</option>
+    <option value="XOM">ExxonMobil (3.3%)</option>
+    <option value="PFE">Pfizer (3.8%)</option>
+    <option value="WMT">Walmart (1.7%)</option>
+    <option value="JPM">JP Morgan Chase (3.1%)</option>
+    <option value="CVX">Chevron (3.6%)</option>
+    <option value="IBM">IBM (4.7%)</option>
+  </select>
+
+  <br />
+
+  <label for="inversion">Cantidad a invertir (USD):</label>
+  <input type="number" id="inversion" placeholder="Ej: 1000" />
+
+  <br />
+
+  <label for="tiempo">Selecciona el período:</label>
+  <select id="tiempo">
+    <option value="12">1 año</option>
+    <option value="6">6 meses</option>
+    <option value="3">3 meses</option>
+    <option value="1">1 mes</option>
+  </select>
+
+  <br />
+
+  <button onclick="calcularDividendos()">Calcular</button>
+
+  <div id="resultado"></div>
+  <div id="tiempoRetorno"></div>
+
+  <script>
+    function calcularDividendos() {
+      const empresa = document.getElementById("empresa").value;
+      const inversion = parseFloat(document.getElementById("inversion").value);
+      const mesesSeleccionados = parseInt(document.getElementById("tiempo").value);
+
+      if (isNaN(inversion) || inversion <= 0) {
+        alert("Ingresa una cantidad válida.");
+        return;
+      }
+
+      const tasas = {
+        "AAPL": 0.032,
+        "KO": 0.035,
+        "JNJ": 0.028,
+        "MSFT": 0.01,
+        "T": 0.06,
+        "VZ": 0.045,
+        "XOM": 0.033,
+        "PFE": 0.038,
+        "WMT": 0.017,
+        "JPM": 0.031,
+        "CVX": 0.036,
+        "IBM": 0.047
+      };
+
+      const tasaAnual = tasas[empresa];
+      if (!tasaAnual) {
+        alert("No hay tasa disponible para esta empresa.");
+        return;
+      }
+
+      // Dividendos para el período seleccionado
+      const dividendosPeriodo = inversion * tasaAnual * (mesesSeleccionados / 12);
+
+      // Tiempo para recuperar la inversión (en meses)
+      const tiempoRecuperacion = (inversion / (inversion * tasaAnual)) * 12;
+
+      document.getElementById("resultado").innerText =
+        `Ingresos por dividendos en ${mesesSeleccionados} meses: $${dividendosPeriodo.toFixed(2)}`;
+
+      document.getElementById("tiempoRetorno").innerText =
+        `Tiempo estimado para recuperar tu inversión: ${tiempoRecuperacion.toFixed(1)} meses`;
+    }
+  </script>
+</body>
+</html>
